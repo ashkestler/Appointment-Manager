@@ -1,11 +1,14 @@
 package Controller;
 
+import DBAccess.DBCustomers;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,22 +20,45 @@ import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable {
-    public TextField usernameText, passwordText;
-    public Button LoginBtn, ExitBtn;
-    public Label timeZoneLabel;
+    @FXML
+    private TextField usernameText, passwordText;
+    @FXML
+    private Label timeZoneLabel;
 
 
-    public void onLoginBtn(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../View/MainScreen.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
+    public void onLoginBtn(ActionEvent actionEvent) {
+        String userName = usernameText.getText();
+        String password = passwordText.getText();
+        if (DBCustomers.validateLogin(userName, password)) {
+            try {
+                Parent parent = FXMLLoader.load(getClass().getResource("../View/MainScreen.fxml"));
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            showAlert(1);
+        }
     }
 
     public void onExitBtn(ActionEvent actionEvent) {
         System.exit(0);
     }
 
+    public void showAlert(int alertType) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        switch (alertType) {
+            case 1:
+                alert.setTitle("Error");
+                alert.setHeaderText("Login Failed");
+                alert.setContentText("Username / password is incorrect");
+                alert.showAndWait();
+                break;
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         timeZoneLabel.setText("Your Time Zone is " + String.valueOf(ZoneId.systemDefault()));

@@ -11,18 +11,18 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddAppointmentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditAppointmentController">
     <bottom>
         <ButtonBar fx:id="buttonBar" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <buttons>
                 <Button defaultButton="true" mnemonicParsing="false" onAction="#onSaveBtn" text="Save">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                    <font>
+                        <Font size="14.0" />
+                    </font></Button>
                 <Button cancelButton="true" mnemonicParsing="false" onAction="#onCancelBtn" text="Cancel">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                    <font>
+                        <Font size="14.0" />
+                    </font></Button>
             </buttons>
             <opaqueInsets>
                 <Insets />
@@ -34,10 +34,10 @@
     </bottom>
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <TextField fx:id="idField" editable="false" layoutX="373.0" layoutY="40.0" text="Auto Generated">
-            <font>
-               <Font name="System Italic" size="12.0" />
-            </font></TextField>
+            <TextField fx:id="idField" editable="false" layoutX="373.0" layoutY="40.0">
+                <font>
+                    <Font name="System Italic" size="12.0" />
+                </font></TextField>
             <TextField fx:id="titleField" layoutX="373.0" layoutY="75.0" />
             <TextField fx:id="descriptionField" layoutX="373.0" layoutY="110.0" />
             <TextField fx:id="locationField" layoutX="373.0" layoutY="145.0" />
@@ -58,16 +58,16 @@
             <Label layoutX="258.0" layoutY="324.0" text="Customer" />
             <Label layoutX="258.0" layoutY="289.0" text="Contact" />
             <Label layoutX="258.0" layoutY="359.0" text="User" />
-         <Label layoutX="60.0" layoutY="58.0" text="Add New">
-            <font>
-               <Font size="24.0" />
-            </font>
-         </Label>
-         <Label layoutX="39.0" layoutY="105.0" text="Appointment">
-            <font>
-               <Font size="24.0" />
-            </font>
-         </Label>
+            <Label layoutX="89.0" layoutY="58.0" text="Edit">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+            <Label layoutX="39.0" layoutY="105.0" text="Appointment">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
         </AnchorPane>
     </center>
 </BorderPane>

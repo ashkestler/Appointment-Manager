@@ -5,6 +5,7 @@ import Utils.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -88,5 +89,24 @@ public class DBCustomers {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static boolean validateLogin(String userName, String password) {
+        try {
+            String sql = "SELECT * FROM Users WHERE User_Name = ? AND Password = ?";
+
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+
+            ps.setString(1, userName);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
     }
 }

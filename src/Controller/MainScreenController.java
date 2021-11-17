@@ -24,6 +24,7 @@ public class MainScreenController implements Initializable {
     public Button addCustomerBtn, editCustomerBtn, deleteCustomerBtn;
 
     private static Customers customerToEdit;
+    private static Customers selectedCustomer;
 
     public void onAddCustomerBtn(ActionEvent actionEvent) {
         Parent parent = null;
@@ -51,7 +52,7 @@ public class MainScreenController implements Initializable {
     }
 
     public void onDeleteCustomerBtn(ActionEvent actionEvent) {
-        Customers selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+        selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
         int customerId = selectedCustomer.getCustomerId();
 
         if (selectedCustomer == null) {

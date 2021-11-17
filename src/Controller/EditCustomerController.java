@@ -56,10 +56,6 @@ public class EditCustomerController implements Initializable {
             showAlert(4);
             return;
         }
-        if (divisionComboBox.getValue() == null) {
-            showAlert(5);
-            return;
-        }
 
         try {
             DBCustomers.editCustomer(custId, name, address, postalCode, phone, divisionId);

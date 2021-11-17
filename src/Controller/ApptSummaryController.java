@@ -1,8 +1,11 @@
 package Controller;
 
 import DBAccess.DBAppointments;
+import DBAccess.DBCustomers;
+import Model.Appointments;
 import Model.Customers;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,27 +25,71 @@ import java.util.ResourceBundle;
 
 public class ApptSummaryController implements Initializable {
     private Customers selectedCustomer;
-    private TableView apptTable;
+    @FXML
+    private TableView<Appointments> apptTable;
+    @FXML
     private TableColumn IdCol;
+    @FXML
     private TableColumn titleCol;
+    @FXML
     private TableColumn descCol;
+    @FXML
     private TableColumn locationCol;
+    @FXML
     private TableColumn contactCol;
+    @FXML
     private TableColumn typeCol;
+    @FXML
     private TableColumn startCol;
+    @FXML
     private TableColumn endCol;
+    @FXML
     private TableColumn custIdCol;
+    @FXML
     private TableColumn userIdCol;
 
-
+    private static Appointments apptToEdit;
 
     public void onAddApptBtn(ActionEvent actionEvent) {
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource("../View/AddAppointment.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onEditApptBtn(ActionEvent actionEvent) {
+        apptToEdit = apptTable.getSelectionModel().getSelectedItem();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("../View/EditAppointment.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onDeleteApptBtn(ActionEvent actionEvent) {
+        apptToEdit = apptTable.getSelectionModel().getSelectedItem();
+        int apptId = apptToEdit.getApptId();
+        int custId = MainScreenController.getCustomerToEdit().getCustomerId();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you sure?");
+        alert.setContentText("Do you want to delete this appointment?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            DBAppointments.deleteAppointment(apptId);
+
+            apptTable.setItems(DBAppointments.getAllAppts(custId));
+        }
     }
 
     public void onCancelBtn(ActionEvent actionEvent) {
@@ -55,6 +102,10 @@ public class ApptSummaryController implements Initializable {
         if (result.get() == ButtonType.OK){
             returnToMainScreen(actionEvent);
         }
+    }
+
+    public static Appointments getApptToEdit() {
+        return apptToEdit;
     }
 
     private void returnToMainScreen(ActionEvent event) {

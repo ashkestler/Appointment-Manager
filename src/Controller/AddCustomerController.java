@@ -52,10 +52,6 @@ public class AddCustomerController implements Initializable {
             showAlert(4);
             return;
         }
-        if (divisionComboBox.getSelectionModel().isEmpty()) {
-            showAlert(5);
-            return;
-        }
 
         try {
             DBCustomers.addCustomer(name, address, postalCode, phone, divisionId);

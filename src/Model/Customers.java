@@ -1,7 +1,8 @@
 package Model;
 
 public class Customers {
-    private int customerId, divisionId;
+    private int customerId;
+    private int divisionId;
     private String name;
     private String address;
     private String postalCode;
@@ -25,10 +26,6 @@ public class Customers {
 
     public String getDivision() {
         return division;
-    }
-
-    public void setDivision(String division) {
-        this.division = division;
     }
 
     public int getCustomerId() {
@@ -55,27 +52,8 @@ public class Customers {
         return phone;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    @Override
+    public String toString() {
+        return (name);
     }
 }
