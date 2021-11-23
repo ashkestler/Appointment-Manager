@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable {
@@ -24,6 +25,7 @@ public class LoginScreenController implements Initializable {
     private TextField usernameText, passwordText;
     @FXML
     private Label timeZoneLabel;
+    private ResourceBundle resourceBundle;
 
 
     public void onLoginBtn(ActionEvent actionEvent) {
@@ -52,7 +54,7 @@ public class LoginScreenController implements Initializable {
 
         switch (alertType) {
             case 1:
-                alert.setTitle("Error");
+                alert.setTitle(resourceBundle.getString("error"));
                 alert.setHeaderText("Login Failed");
                 alert.setContentText("Username / password is incorrect");
                 alert.showAndWait();
@@ -61,6 +63,7 @@ public class LoginScreenController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        timeZoneLabel.setText("Your Time Zone is " + String.valueOf(ZoneId.systemDefault()));
+        this.resourceBundle = resourceBundle;
+        timeZoneLabel.setText(resourceBundle.getString("timezone") + " " + String.valueOf(ZoneId.systemDefault()));
     }
 }

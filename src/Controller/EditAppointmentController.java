@@ -10,17 +10,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditAppointmentController implements Initializable {
@@ -84,6 +80,11 @@ public class EditAppointmentController implements Initializable {
             return;
         }
 
+        if (DBAppointments.modApptOverlap(customerId, apptId, start, end)) {
+            showAlert(6);
+            return;
+        }
+
         try {
             DBAppointments.editAppointment(apptId, title, desc, location, type, start, end, customerId, userId, contactId);
             returnToApptScreen(actionEvent);
@@ -93,6 +94,15 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void onCancelBtn(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Cancel");
+        alert.setHeaderText("Confirm Cancel");
+        alert.setContentText("Are you sure you want to cancel editing an appointment?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK){
+            returnToApptScreen(actionEvent);
+        }
     }
 
     private void returnToApptScreen(ActionEvent event) {
@@ -144,6 +154,13 @@ public class EditAppointmentController implements Initializable {
                 alert.setContentText("End time must be after start time");
                 alert.showAndWait();
                 break;
+
+            case 6:
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Adding Appointment");
+                alert.setContentText("The chosen time span overlaps with a previously scheduled appointment");
+                alert.showAndWait();
+                break;
         }
     }
 
@@ -158,8 +175,15 @@ public class EditAppointmentController implements Initializable {
         typeField.setText(selectedAppt.getType());
         startDatePicker.setValue(selectedAppt.getStart().toLocalDate());
 
-        LocalTime start = LocalTime.of(8, 0);
-        LocalTime end = LocalTime.of(22, 0);
+        LocalTime startEst = LocalTime.of(8, 0);
+        ZonedDateTime zdt = LocalDateTime.of(LocalDate.now(), startEst).atZone(ZoneId.of("America/New_York"));
+        ZonedDateTime startTime = zdt.withZoneSameInstant(ZoneId.systemDefault());
+        LocalTime start = startTime.toLocalTime();
+
+        LocalTime endEst = LocalTime.of(22, 0);
+        ZonedDateTime zdt1 = LocalDateTime.of(LocalDate.now(), endEst).atZone(ZoneId.of("America/New_York"));
+        ZonedDateTime endTime = zdt1.withZoneSameInstant(ZoneId.systemDefault());
+        LocalTime end = endTime.toLocalTime();
 
         while (start.isBefore(end.plusSeconds(1))) {
             startTimePicker.getItems().add(start);

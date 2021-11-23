@@ -79,5 +79,10 @@
             </StackPane>
          </children>
       </GridPane>
+      <Button layoutX="830.0" layoutY="70.0" mnemonicParsing="false" onAction="#onViewReports" prefWidth="170.0" text="View Reports">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

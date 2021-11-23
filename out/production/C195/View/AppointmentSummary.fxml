@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -81,6 +83,34 @@
                   </Button>
                </children></StackPane>
                 <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" />
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <RadioButton fx:id="allView" mnemonicParsing="false" onAction="#allViewSelected" selected="true" text="All Appointments">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="toggleGroup" />
+                     </toggleGroup>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="monthlyView" layoutX="454.0" layoutY="30.0" mnemonicParsing="false" onAction="#monthlyViewSelected" text="Monthly View" toggleGroup="$toggleGroup">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets left="400.0" />
+                     </StackPane.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="weeklyView" layoutX="454.0" layoutY="30.0" mnemonicParsing="false" onAction="#weeklyViewSelected" text="Weekly View" toggleGroup="$toggleGroup">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets right="400.0" />
+                     </StackPane.margin>
+                  </RadioButton>
+               </children>
+            </StackPane>
             </children>
         </GridPane>
     </children>

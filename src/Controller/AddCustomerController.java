@@ -6,6 +6,7 @@ import DBAccess.DBDivisions;
 import Model.Countries;
 import Model.Divisions;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -20,14 +21,18 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable {
-    public TextField custNameText;
-    public TextField addressText;
-    public TextField postalCodeText;
-    public TextField phoneText;
-    public ComboBox<Countries> countryComboBox;
-    public ComboBox<Divisions> divisionComboBox;
-    public Button saveBtn;
-    public Button cancelBtn;
+    @FXML
+    private TextField custNameText;
+    @FXML
+    private TextField addressText;
+    @FXML
+    private TextField postalCodeText;
+    @FXML
+    private TextField phoneText;
+    @FXML
+    private ComboBox<Countries> countryComboBox;
+    @FXML
+    private ComboBox<Divisions> divisionComboBox;
 
     public void onSaveBtn(ActionEvent actionEvent) {
         String name = custNameText.getText();
@@ -78,7 +83,7 @@ public class AddCustomerController implements Initializable {
         divisionComboBox.setItems(DBDivisions.getStates(C.getCountryId()));
     }
 
-    private void returnToMainScreen(ActionEvent event) {
+    public void returnToMainScreen(ActionEvent event) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("../View/MainScreen.fxml"));
             Scene scene = new Scene(parent);

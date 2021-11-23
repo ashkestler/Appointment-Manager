@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
+    <children>
+        <Label fx:id="reportScreenLabel" layoutX="280.0" layoutY="28.0" text="Reports">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <VBox alignment="TOP_CENTER" layoutX="101.0" layoutY="77.0" prefHeight="300.0" prefWidth="400.0">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="400.0" spacing="10.0">
+                    <children>
+                        <Label fx:id="reportApp101Label" text="APP101 - Appointment Type Tally" />
+                        <Label fx:id="report101DescLabel" alignment="CENTER" prefWidth="300.0" text="Running count of appointment types per month.">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <Button fx:id="reportRun101Button" mnemonicParsing="false" onAction="#onRunApp101" prefWidth="105.0" text="Run APP101" />
+                    </children>
+                </VBox>
+                <Separator prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                    </VBox.margin>
+                </Separator>
+                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                    <children>
+                        <Label fx:id="reportApp102Label" text="APP102 - Contact Schedule" />
+                        <Label fx:id="report102DescLabel" alignment="CENTER" prefWidth="300.0" text="Scheduled appointments for each contact." wrapText="true">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <Button fx:id="reportRun102Button" mnemonicParsing="false" onAction="#onRunApp102" prefWidth="105.0" text="Run APP102" />
+                    </children>
+                </VBox>
+                <Separator prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                    </VBox.margin>
+                </Separator>
+                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                    <children>
+                        <Label fx:id="reportApp103Label" text="APP103 - Customer Schedule" />
+                        <Label fx:id="report103DescLabel" alignment="CENTER" prefWidth="300.0" text="Scheduled appointments for each customer.">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <Button fx:id="reportRun103Button" mnemonicParsing="false" onAction="#onRunApp103" prefWidth="105.0" text="Run APP103" />
+                    </children>
+                </VBox>
+                <Separator prefWidth="200.0" />
+            </children>
+        </VBox>
+        <Button fx:id="backButton" layoutX="501.0" layoutY="409.0" mnemonicParsing="false" onAction="#onBackBtn" prefWidth="50.0" text="Back">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+    </children>
+</AnchorPane>

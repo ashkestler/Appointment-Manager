@@ -11,10 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -24,7 +21,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ApptSummaryController implements Initializable {
-    private Customers selectedCustomer;
+    @FXML
+    private ToggleGroup toggleGroup;
     @FXML
     private TableView<Appointments> apptTable;
     @FXML
@@ -50,9 +48,21 @@ public class ApptSummaryController implements Initializable {
 
     private static Appointments apptToEdit;
 
+    public void allViewSelected(ActionEvent actionEvent) {
+        apptTable.setItems(DBAppointments.getAllAppts());
+    }
+
+    public void monthlyViewSelected(ActionEvent actionEvent) {
+        apptTable.setItems(DBAppointments.getMonthlyAppts());
+    }
+
+    public void weeklyViewSelected(ActionEvent actionEvent) {
+        apptTable.setItems(DBAppointments.getWeeklyAppts());
+    }
+
     public void onAddApptBtn(ActionEvent actionEvent) {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/AddAppointment.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -65,7 +75,7 @@ public class ApptSummaryController implements Initializable {
         apptToEdit = apptTable.getSelectionModel().getSelectedItem();
         Parent parent = null;
         try {
-            parent = FXMLLoader.load(getClass().getResource("../View/EditAppointment.fxml"));
+            parent = FXMLLoader.load(getClass().getResource("/View/EditAppointment.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -78,6 +88,7 @@ public class ApptSummaryController implements Initializable {
         apptToEdit = apptTable.getSelectionModel().getSelectedItem();
         int apptId = apptToEdit.getApptId();
         int custId = MainScreenController.getCustomerToEdit().getCustomerId();
+        String type = apptToEdit.getType();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
@@ -88,7 +99,14 @@ public class ApptSummaryController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             DBAppointments.deleteAppointment(apptId);
 
-            apptTable.setItems(DBAppointments.getAllAppts(custId));
+            apptTable.setItems(DBAppointments.getAllAppts());
+
+            Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
+            alertInfo.setTitle("Information");
+            alertInfo.setHeaderText("Appointment has been deleted");
+            alertInfo.setContentText("Appointment #" + apptId + " " + type + " has been deleted");
+            alertInfo.showAndWait();
+
         }
     }
 
@@ -121,7 +139,6 @@ public class ApptSummaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        selectedCustomer = MainScreenController.getCustomerToEdit();
         IdCol.setCellValueFactory(new PropertyValueFactory<>("apptId"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("desc"));
@@ -132,6 +149,7 @@ public class ApptSummaryController implements Initializable {
         endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        apptTable.setItems(DBAppointments.getAllAppts(selectedCustomer.getCustomerId()));
+
+        apptTable.setItems(DBAppointments.getAllAppts());
     }
 }

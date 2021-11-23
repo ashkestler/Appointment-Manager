@@ -2,8 +2,8 @@ package Controller;
 
 import DBAccess.DBAppointments;
 import DBAccess.DBCustomers;
+import Model.Appointments;
 import Model.Contacts;
-import Model.Countries;
 import Model.Customers;
 import Model.Users;
 import javafx.event.ActionEvent;
@@ -18,9 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -82,6 +80,11 @@ public class AddAppointmentController implements Initializable {
             return;
         }
 
+        if (DBAppointments.apptOverlap(customerId, start, end)) {
+            showAlert(6);
+            return;
+        }
+
         try {
             DBAppointments.addAppointment(title, desc, location, type, start, end, customerId, userId, contactId);
             returnToApptScreen(actionEvent);
@@ -103,9 +106,9 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
-    private void returnToApptScreen(ActionEvent event) {
+    public void returnToApptScreen(ActionEvent event) {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/AppointmentSummary.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/AppointmentSummary.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -152,15 +155,28 @@ public class AddAppointmentController implements Initializable {
                 alert.setContentText("End time must be after start time");
                 alert.showAndWait();
                 break;
+
+            case 6:
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Adding Appointment");
+                alert.setContentText("The chosen time span overlaps with a previously scheduled appointment");
+                alert.showAndWait();
+                break;
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Customers selectedCustomer = MainScreenController.getCustomerToEdit();
 
-        LocalTime start = LocalTime.of(8, 0);
-        LocalTime end = LocalTime.of(22, 0);
+        LocalTime startEst = LocalTime.of(8, 0);
+        ZonedDateTime zdt = LocalDateTime.of(LocalDate.now(), startEst).atZone(ZoneId.of("America/New_York"));
+        ZonedDateTime startTime = zdt.withZoneSameInstant(ZoneId.systemDefault());
+        LocalTime start = startTime.toLocalTime();
+
+        LocalTime endEst = LocalTime.of(22, 0);
+        ZonedDateTime zdt1 = LocalDateTime.of(LocalDate.now(), endEst).atZone(ZoneId.of("America/New_York"));
+        ZonedDateTime endTime = zdt1.withZoneSameInstant(ZoneId.systemDefault());
+        LocalTime end = endTime.toLocalTime();
 
         while (start.isBefore(end.plusSeconds(1))) {
             startTimePicker.getItems().add(start);
@@ -170,13 +186,7 @@ public class AddAppointmentController implements Initializable {
 
         contactComboBox.setItems(DBAppointments.getAllContacts());
         customerComboBox.setItems(DBCustomers.getAllCustomers());
-        int custToChoose = selectedCustomer.getCustomerId();
-        for (Customers C : customerComboBox.getItems()) {
-            if (custToChoose == C.getCustomerId()) {
-                customerComboBox.setValue(C);
-                break;
-            }
-        }
+        customerComboBox.getSelectionModel().selectFirst();
         userComboBox.setItems(DBAppointments.getAllUsers());
 
     }

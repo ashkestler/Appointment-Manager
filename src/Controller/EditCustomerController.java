@@ -7,6 +7,7 @@ import Model.Countries;
 import Model.Customers;
 import Model.Divisions;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,15 +23,20 @@ import java.util.ResourceBundle;
 
 public class EditCustomerController implements Initializable {
     private Customers selectedCustomer;
-    public TextField custIDText;
-    public TextField custNameText;
-    public TextField addressText;
-    public TextField postalCodeText;
-    public TextField phoneText;
-    public ComboBox<Countries> countryComboBox;
-    public ComboBox<Divisions> divisionComboBox;
-    public Button saveBtn;
-    public Button cancelBtn;
+    @FXML
+    private TextField custIDText;
+    @FXML
+    private TextField custNameText;
+    @FXML
+    private TextField addressText;
+    @FXML
+    private TextField postalCodeText;
+    @FXML
+    private TextField phoneText;
+    @FXML
+    private ComboBox<Countries> countryComboBox;
+    @FXML
+    private ComboBox<Divisions> divisionComboBox;
 
     public void onSaveBtn(ActionEvent actionEvent) {
         int custId = Integer.parseInt(custIDText.getText());
@@ -73,15 +79,7 @@ public class EditCustomerController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         // if OK button selection = true, returns to main screen
         if (result.get() == ButtonType.OK){
-            try {
-                Parent mainScreenParent = FXMLLoader.load(getClass().getResource("../View/MainScreen.fxml"));
-                Scene mainScreenScene = new Scene(mainScreenParent);
-                Stage mainScreenStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                mainScreenStage.setScene(mainScreenScene);
-                mainScreenStage.show();
-            } catch (IOException e){
-                e.printStackTrace();
-            }
+            returnToMainScreen(actionEvent);
         }
     }
 

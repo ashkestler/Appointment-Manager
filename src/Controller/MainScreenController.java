@@ -1,8 +1,10 @@
 package Controller;
 
+import DBAccess.DBAppointments;
 import Model.Customers;
 import DBAccess.DBCustomers;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -18,10 +20,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
+    @FXML
+    private TableView<Customers> customerTable;
+    @FXML
+    private TableColumn nameCol, addressCol, postalCodeCol, phoneCol, divisionIdCol;
 
-    public TableView<Customers> customerTable;
-    public TableColumn nameCol, addressCol, postalCodeCol, phoneCol, divisionIdCol;
-    public Button addCustomerBtn, editCustomerBtn, deleteCustomerBtn;
+    private Alert appointmentAlert = new Alert(Alert.AlertType.INFORMATION);
 
     private static Customers customerToEdit;
     private static Customers selectedCustomer;
@@ -29,7 +33,7 @@ public class MainScreenController implements Initializable {
     public void onAddCustomerBtn(ActionEvent actionEvent) {
         Parent parent = null;
         try {
-            parent = FXMLLoader.load(getClass().getResource("../View/AddCustomer.fxml"));
+            parent = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -42,7 +46,7 @@ public class MainScreenController implements Initializable {
         customerToEdit = customerTable.getSelectionModel().getSelectedItem();
         Parent parent = null;
         try {
-            parent = FXMLLoader.load(getClass().getResource("../View/EditCustomer.fxml"));
+            parent = FXMLLoader.load(getClass().getResource("/View/EditCustomer.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -80,12 +84,38 @@ public class MainScreenController implements Initializable {
         customerToEdit = customerTable.getSelectionModel().getSelectedItem();
         Parent parent = null;
         try {
-            parent = FXMLLoader.load(getClass().getResource("../View/AppointmentSummary.fxml"));
+            parent = FXMLLoader.load(getClass().getResource("/View/AppointmentSummary.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void onViewReports(ActionEvent actionEvent) {
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void checkForAppointments() {
+        String result = DBAppointments.checkAppointmentIn15Minutes();
+        if(result != null) {
+            appointmentAlert.setTitle("Upcoming appointment!");
+            appointmentAlert.setHeaderText("An appointment will be arriving soon.");
+            appointmentAlert.setContentText(result);
+            appointmentAlert.show();
+        } else {
+            appointmentAlert.setTitle("No upcoming appointments");
+            appointmentAlert.setHeaderText("There are no appointments within the next 15 minutes.");
+            appointmentAlert.show();
         }
     }
 
@@ -102,5 +132,6 @@ public class MainScreenController implements Initializable {
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("division"));
         customerTable.setItems(DBCustomers.getAllCustomers());
 
+        checkForAppointments();
     }
 }
