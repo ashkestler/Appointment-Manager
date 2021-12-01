@@ -11,6 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBCustomers {
+
+    /**
+     * This method queries the database and returns a list of all customers.
+     * @return custList
+     */
     public static ObservableList<Customers> getAllCustomers() {
 
         ObservableList<Customers> custList = FXCollections.observableArrayList();
@@ -42,6 +47,14 @@ public class DBCustomers {
         return custList;
     }
 
+    /**
+     * This method adds a new customer to the database.
+     * @param name
+     * @param address
+     * @param postalCode
+     * @param phone
+     * @param divisionId
+     */
     public static void addCustomer(String name, String address, String postalCode, String phone, int divisionId) {
         try {
             String sql = "INSERT INTO Customers VALUES(NULL, ?, ?, ?, ?, NOW(), 'script', NOW(), 'script', ?)";
@@ -78,6 +91,10 @@ public class DBCustomers {
         }
     }
 
+    /**
+     * This method deletes a customer from the database.
+     * @param customerId
+     */
     public static void deleteCustomer(int customerId) {
         try {
             String sql = "DELETE FROM Customers WHERE customer_id = ?";
@@ -91,6 +108,12 @@ public class DBCustomers {
         }
     }
 
+    /**
+     * This method verifies if the provided username and password is found in the database.
+     * @param userName
+     * @param password
+     * @return
+     */
     public static boolean validateLogin(String userName, String password) {
         try {
             String sql = "SELECT * FROM Users WHERE User_Name = ? AND Password = ?";

@@ -38,6 +38,11 @@ public class EditCustomerController implements Initializable {
     @FXML
     private ComboBox<Divisions> divisionComboBox;
 
+    /**
+     * This method handles the Save button action. Verifies text fields are not empty and updates the
+     * database.
+     * @param actionEvent
+     */
     public void onSaveBtn(ActionEvent actionEvent) {
         int custId = Integer.parseInt(custIDText.getText());
         String name = custNameText.getText();
@@ -71,6 +76,10 @@ public class EditCustomerController implements Initializable {
         }
     }
 
+    /**
+     * This method displays a confirmation alert and returns to the main screen.
+     * @param actionEvent
+     */
     public void onCancelBtn(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Cancel");
@@ -83,14 +92,23 @@ public class EditCustomerController implements Initializable {
         }
     }
 
+    /**
+     * This method populates the Division combobox depending upon the selection in
+     * the Country combobox.
+     * @param actionEvent
+     */
     public void cbxSelect(ActionEvent actionEvent) {
         Countries C = countryComboBox.getValue();
         divisionComboBox.setItems(DBDivisions.getStates(C.getCountryId()));
     }
 
+    /**
+     * This method returns to the main screen.
+     * @param event
+     */
     private void returnToMainScreen(ActionEvent event) {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/MainScreen.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/MainScreen.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -99,6 +117,10 @@ public class EditCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Displays various alerts.
+     * @param alertType
+     */
     public void showAlert(int alertType) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
@@ -128,13 +150,6 @@ public class EditCustomerController implements Initializable {
                 alert.setTitle("Error");
                 alert.setHeaderText("Error Adding Customer");
                 alert.setContentText("Phone field is required");
-                alert.showAndWait();
-                break;
-
-            case 5:
-                alert.setTitle("Error");
-                alert.setHeaderText("Error Adding Customer");
-                alert.setContentText("Division field is required");
                 alert.showAndWait();
                 break;
         }

@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Locale locale = new Locale("fr");
-        ResourceBundle bundle = ResourceBundle.getBundle("App", locale);
+        ResourceBundle bundle = ResourceBundle.getBundle("App", Locale.getDefault());
         Parent root = FXMLLoader.load(getClass().getResource("/View/LoginScreen.fxml"), bundle);
         primaryStage.setTitle("Appointment Scheduler");
         primaryStage.setScene(new Scene(root));

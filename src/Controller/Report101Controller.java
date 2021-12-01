@@ -29,6 +29,11 @@ public class Report101Controller implements Initializable {
     @FXML
     private Label resultLabel;
 
+    /**
+     * This method retrieves the type and month from the comboboxes and counts the number of the chosen
+     * type of appointment in the chosen month.
+     * @param actionEvent
+     */
     public void onCountBtn(ActionEvent actionEvent) {
         String type = typeCombo.getValue();
         String month = monthCombo.getValue();
@@ -43,6 +48,10 @@ public class Report101Controller implements Initializable {
         }
     }
 
+    /**
+     * This method returns to the Reports screen when Back button is pressed.
+     * @param actionEvent
+     */
     public void onBackBtn(ActionEvent actionEvent) {
         ReportsController backBtn = new ReportsController();
         backBtn.returnToReports(actionEvent);

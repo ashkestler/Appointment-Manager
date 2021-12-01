@@ -44,7 +44,11 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private ComboBox<Users> userComboBox;
 
-
+    /**
+     * This method handles the Save button action. Verifies text fields are not empty and
+     * adds appointment to the database.
+     * @param actionEvent
+     */
     public void onSaveBtn(ActionEvent actionEvent) {
         String title = titleField.getText();
         String desc = descriptionField.getText();
@@ -94,6 +98,10 @@ public class AddAppointmentController implements Initializable {
 
     }
 
+    /**
+     * Displays confirmation message and returns to the Appointment Summary screen.
+     * @param actionEvent
+     */
     public void onCancelBtn(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Cancel");
@@ -106,6 +114,10 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * This method returns to the Appointment Summary screen.
+     * @param event
+     */
     public void returnToApptScreen(ActionEvent event) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("/View/AppointmentSummary.fxml"));
@@ -117,6 +129,10 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Displays various alerts.
+     * @param alertType
+     */
     public void showAlert(int alertType) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 

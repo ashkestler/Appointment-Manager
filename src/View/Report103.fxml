@@ -53,7 +53,7 @@
                             </StackPane.margin>
                         </Button>
                     </children></StackPane>
-                <TableView fx:id="contactTable" prefHeight="288.0" prefWidth="722.0" GridPane.rowIndex="1">
+                <TableView fx:id="apptTableByCust" prefHeight="288.0" prefWidth="722.0" GridPane.rowIndex="1">
                     <columns>
                         <TableColumn fx:id="IdCol" prefWidth="25.0" text="ID" />
                         <TableColumn fx:id="titleCol" prefWidth="100.0" text="Title" />
@@ -62,7 +62,6 @@
                         <TableColumn fx:id="typeCol" prefWidth="100.0" text="Type" />
                         <TableColumn fx:id="startCol" prefWidth="125.0" text="Start" />
                         <TableColumn fx:id="endCol" prefWidth="125.0" text="End" />
-                        <TableColumn fx:id="contactIdCol" prefWidth="25.0" text="C-ID" />
                     </columns>
                 </TableView>
             </children>

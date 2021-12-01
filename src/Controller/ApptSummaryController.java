@@ -48,18 +48,34 @@ public class ApptSummaryController implements Initializable {
 
     private static Appointments apptToEdit;
 
+    /**
+     * Populates the appointment table with all appointments when All Appointments radio button is selected.
+     * @param actionEvent
+     */
     public void allViewSelected(ActionEvent actionEvent) {
         apptTable.setItems(DBAppointments.getAllAppts());
     }
 
+    /**
+     * Populates the appointment table with appointments in the current month when Monthly View radio button is selected.
+     * @param actionEvent
+     */
     public void monthlyViewSelected(ActionEvent actionEvent) {
         apptTable.setItems(DBAppointments.getMonthlyAppts());
     }
 
+    /**
+     * Populates the appointment table with appointments in the current week when Weekly View radio button is selected.
+     * @param actionEvent
+     */
     public void weeklyViewSelected(ActionEvent actionEvent) {
         apptTable.setItems(DBAppointments.getWeeklyAppts());
     }
 
+    /**
+     * This method launches the Add Appointment screen.
+     * @param actionEvent
+     */
     public void onAddApptBtn(ActionEvent actionEvent) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
@@ -71,6 +87,10 @@ public class ApptSummaryController implements Initializable {
         }
     }
 
+    /**
+     * This method launches the Edit Appointment screen and passes the selected appointment.
+     * @param actionEvent
+     */
     public void onEditApptBtn(ActionEvent actionEvent) {
         apptToEdit = apptTable.getSelectionModel().getSelectedItem();
         Parent parent = null;
@@ -84,10 +104,13 @@ public class ApptSummaryController implements Initializable {
         }
     }
 
+    /**
+     * This method displays a confirmation message and deletes the selected appointment from the database.
+     * @param actionEvent
+     */
     public void onDeleteApptBtn(ActionEvent actionEvent) {
         apptToEdit = apptTable.getSelectionModel().getSelectedItem();
         int apptId = apptToEdit.getApptId();
-        int custId = MainScreenController.getCustomerToEdit().getCustomerId();
         String type = apptToEdit.getType();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -110,6 +133,10 @@ public class ApptSummaryController implements Initializable {
         }
     }
 
+    /**
+     * This method displays a confirmation message and returns to the main screen when the Cancel button is clicked.
+     * @param actionEvent
+     */
     public void onCancelBtn(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Return to main");
@@ -122,10 +149,18 @@ public class ApptSummaryController implements Initializable {
         }
     }
 
+    /**
+     * This method returns the selected appointment in the table.
+     * @return apptToEdit
+     */
     public static Appointments getApptToEdit() {
         return apptToEdit;
     }
 
+    /**
+     * This method returns to the main screen.
+     * @param event
+     */
     private void returnToMainScreen(ActionEvent event) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("../View/MainScreen.fxml"));

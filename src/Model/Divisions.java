@@ -5,12 +5,21 @@ public class Divisions {
     private String division;
     private int countryId;
 
+    /**
+     * This is the constructor for the Divisions class.
+     * @param divisionId
+     * @param division
+     * @param countryId
+     */
     public Divisions(int divisionId, String division, int countryId) {
         this.divisionId = divisionId;
         this.division = division;
         this.countryId = countryId;
     }
 
+    /*
+    **** Getters
+     */
     public int getDivisionId() {
         return divisionId;
     }

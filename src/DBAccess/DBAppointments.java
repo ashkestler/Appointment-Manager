@@ -12,6 +12,11 @@ import java.sql.*;
 import java.time.LocalDateTime;
 
 public class DBAppointments {
+
+    /**
+     * This method queries the database and returns all appointments.
+     * @return apptList
+     */
     public static ObservableList<Appointments> getAllAppts() {
 
         ObservableList<Appointments> apptList = FXCollections.observableArrayList();
@@ -43,6 +48,10 @@ public class DBAppointments {
         return apptList;
     }
 
+    /**
+     * This method queries the database and returns all appointments in the current month.
+     * @return weeklyApptList
+     */
     public static ObservableList<Appointments> getWeeklyAppts() {
 
         ObservableList<Appointments> weeklyApptList = FXCollections.observableArrayList();
@@ -74,6 +83,10 @@ public class DBAppointments {
         return weeklyApptList;
     }
 
+    /**
+     * This method queries the database and returns all appointments in the current month.
+     * @return monthlyApptList
+     */
     public static ObservableList<Appointments> getMonthlyAppts() {
 
         ObservableList<Appointments> monthlyApptList = FXCollections.observableArrayList();
@@ -105,6 +118,11 @@ public class DBAppointments {
         return monthlyApptList;
     }
 
+    /**
+     * This method queries the database and returns all appointments for a given contact.
+     * @param contactId
+     * @return apptList
+     */
     public static ObservableList<Appointments> getAllApptsByContact(int contactId) {
 
         ObservableList<Appointments> apptList = FXCollections.observableArrayList();
@@ -135,6 +153,28 @@ public class DBAppointments {
         return apptList;
     }
 
+    /**
+     * This method returns a list of appointments by customer. The lambda filters all appointments by those which match
+     * a given customer ID.
+     * @param custId
+     * @return cList
+     */
+    public static ObservableList<Appointments> getAllApptsByCustomer(int custId) {
+
+        ObservableList<Appointments> allList = getAllAppts();
+        ObservableList<Appointments> cList = allList.filtered(a -> {
+            if (custId == a.getCustId()) {
+                return true;
+            }
+            return false;
+        });
+        return cList;
+    }
+
+    /**
+     * This method queries the database and returns a list of all contacts.
+     * @return contactList
+     */
     public static ObservableList<Contacts> getAllContacts() {
 
         ObservableList<Contacts> contactList = FXCollections.observableArrayList();
@@ -158,6 +198,10 @@ public class DBAppointments {
         return contactList;
     }
 
+    /**
+     * This method queries the database and returns a list of all users.
+     * @return userList
+     */
     public static ObservableList<Users> getAllUsers() {
 
         ObservableList<Users> userList = FXCollections.observableArrayList();
@@ -181,6 +225,10 @@ public class DBAppointments {
         return userList;
     }
 
+    /**
+     * This method queries the database and returns a list of all types.
+     * @return typeList
+     */
     public static ObservableList<String> getAllTypes() {
 
         ObservableList<String> typeList = FXCollections.observableArrayList();
@@ -201,6 +249,12 @@ public class DBAppointments {
         return typeList;
     }
 
+    /**
+     * This method runs the first report.
+     * @param type
+     * @param month
+     * @return count
+     */
     public static int runApp101(String type, String month) {
         int count = 0;
         try {
@@ -222,6 +276,18 @@ public class DBAppointments {
         return count;
     }
 
+    /**
+     * This method adds a new appointment to the database.
+     * @param title
+     * @param desc
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param custId
+     * @param userId
+     * @param contactId
+     */
     public static void addAppointment(String title, String desc, String location, String type,
                                       LocalDateTime start, LocalDateTime end, int custId,
                                       int userId, int contactId) {
@@ -246,6 +312,19 @@ public class DBAppointments {
         }
     }
 
+    /**
+     * This method updates an appointment in the database.
+     * @param apptId
+     * @param title
+     * @param desc
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customerId
+     * @param userId
+     * @param contactId
+     */
     public static void editAppointment(int apptId, String title, String desc, String location,
                                        String type, LocalDateTime start, LocalDateTime end,
                                        int customerId, int userId, int contactId) {
@@ -270,6 +349,10 @@ public class DBAppointments {
         }
     }
 
+    /**
+     * This method deletes an appointment from the database.
+     * @param apptId
+     */
     public static void deleteAppointment(int apptId) {
         try {
             String sql = "DELETE FROM Appointments WHERE appointment_id = ?";
@@ -283,6 +366,13 @@ public class DBAppointments {
         }
     }
 
+    /**
+     * This method checks if customer has an overlapping appointment with the one currently being scheduled.
+     * @param custId
+     * @param aStart
+     * @param aEnd
+     * @return
+     */
     public static boolean apptOverlap(int custId, LocalDateTime aStart, LocalDateTime aEnd) {
         try {
             String sql = "SELECT * FROM Appointments WHERE customer_id = ?";
@@ -315,6 +405,14 @@ public class DBAppointments {
         return false;
     }
 
+    /**
+     * This method checks whether there is an appointment overlap for the Edit Appointment screen.
+     * @param custId
+     * @param apptId
+     * @param aStart
+     * @param aEnd
+     * @return
+     */
     public static boolean modApptOverlap(int custId, int apptId, LocalDateTime aStart, LocalDateTime aEnd) {
         try {
             String sql = "SELECT * FROM Appointments WHERE customer_id = ? AND appointment_id != ?";
@@ -348,6 +446,10 @@ public class DBAppointments {
         return false;
     }
 
+    /**
+     * This method checks if there is an appointment upcoming within 15 minutes.
+     * @return result
+     */
     public static String checkAppointmentIn15Minutes() {
         try {
             LocalDateTime currentTime = LocalDateTime.now();

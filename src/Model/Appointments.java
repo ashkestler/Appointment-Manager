@@ -15,6 +15,20 @@ public class Appointments {
     private String contact;
     private int contactId;
 
+    /**
+     * This is the constructor for the Appointments class.
+     * @param apptId
+     * @param title
+     * @param desc
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param custId
+     * @param userId
+     * @param contact
+     * @param contactId
+     */
     public Appointments(int apptId, String title, String desc, String location, String type, LocalDateTime start, LocalDateTime end, int custId, int userId, String contact, int contactId) {
         this.apptId = apptId;
         this.title = title;
@@ -29,6 +43,17 @@ public class Appointments {
         this.contactId = contactId;
     }
 
+    /**
+     * This is another constructor for the Appointments class.
+     * @param apptId
+     * @param title
+     * @param desc
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param custId
+     */
     public Appointments(int apptId, String title, String desc, String location, String type, LocalDateTime start, LocalDateTime end, int custId) {
         this.apptId = apptId;
         this.title = title;
@@ -40,6 +65,9 @@ public class Appointments {
         this.custId = custId;
     }
 
+    /*
+    **** Getters
+     */
     public int getApptId() {
         return apptId;
     }

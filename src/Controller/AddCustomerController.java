@@ -34,6 +34,11 @@ public class AddCustomerController implements Initializable {
     @FXML
     private ComboBox<Divisions> divisionComboBox;
 
+    /**
+     * This method handles the Save button action. Verifies text fields are not empty and
+     * adds customer to the database.
+     * @param actionEvent
+     */
     public void onSaveBtn(ActionEvent actionEvent) {
         String name = custNameText.getText();
         String address = addressText.getText();
@@ -66,6 +71,10 @@ public class AddCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Displays a confirmation message and returns to the main screen when Cancel button is clicked.
+     * @param actionEvent
+     */
     public void onCancelBtn(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Cancel");
@@ -78,14 +87,23 @@ public class AddCustomerController implements Initializable {
         }
     }
 
+    /**
+     * This method populates the Division combobox depending upon the selection in
+     * the Country combobox.
+     * @param actionEvent
+     */
     public void cbxSelect(ActionEvent actionEvent) {
         Countries C = countryComboBox.getValue();
         divisionComboBox.setItems(DBDivisions.getStates(C.getCountryId()));
     }
 
+    /**
+     * This method returns to the main screen.
+     * @param event
+     */
     public void returnToMainScreen(ActionEvent event) {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("../View/MainScreen.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/MainScreen.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -94,6 +112,10 @@ public class AddCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Displays various alerts.
+     * @param alertType
+     */
     public void showAlert(int alertType) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 

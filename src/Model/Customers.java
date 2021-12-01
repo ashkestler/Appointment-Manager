@@ -11,6 +11,17 @@ public class Customers {
     private int countryId;
 
 
+    /**
+     * This is the constructor for the Customers class.
+     * @param customerId
+     * @param divisionId
+     * @param name
+     * @param address
+     * @param postalCode
+     * @param phone
+     * @param division
+     * @param countryId
+     */
     public Customers(int customerId, int divisionId, String name, String address, String postalCode, String phone, String division, int countryId) {
         this.customerId = customerId;
         this.divisionId = divisionId;
@@ -22,6 +33,9 @@ public class Customers {
         this.countryId = countryId;
     }
 
+    /*
+    **** Getters
+     */
     public int getCountryId() { return countryId; }
 
     public String getDivision() {

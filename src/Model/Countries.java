@@ -4,12 +4,20 @@ public class Countries {
     private int countryId;
     private String country;
 
+    /**
+     * This is the constructor for the Countries class.
+     * @param countryId
+     * @param country
+     */
     public Countries(int countryId, String country) {
         this.countryId = countryId;
         this.country = country;
     }
 
 
+    /*
+    **** Getters
+     */
     public int getCountryId() {
         return countryId;
     }

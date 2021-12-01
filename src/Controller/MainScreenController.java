@@ -30,6 +30,9 @@ public class MainScreenController implements Initializable {
     private static Customers customerToEdit;
     private static Customers selectedCustomer;
 
+    /**
+     * This method launches the Add Customer screen.
+     */
     public void onAddCustomerBtn(ActionEvent actionEvent) {
         Parent parent = null;
         try {
@@ -41,7 +44,9 @@ public class MainScreenController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * This method launches the Edit Customer screen and passes the selected customer.
+     */
     public void onEditCustomerBtn(ActionEvent actionEvent) {
         customerToEdit = customerTable.getSelectionModel().getSelectedItem();
         Parent parent = null;
@@ -55,9 +60,12 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * This method deletes the selected customer from the database.
+     * Displays alert if no customer is selected for deletion
+     */
     public void onDeleteCustomerBtn(ActionEvent actionEvent) {
         selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
-        int customerId = selectedCustomer.getCustomerId();
 
         if (selectedCustomer == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -72,6 +80,7 @@ public class MainScreenController implements Initializable {
             alert.setContentText("Do you want to delete this customer?");
             Optional<ButtonType> result = alert.showAndWait();
 
+            int customerId = selectedCustomer.getCustomerId();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 DBCustomers.deleteCustomer(customerId);
 
@@ -80,8 +89,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * This method launches the View Appointments screen.
+     */
     public void onViewAppts(ActionEvent actionEvent) {
-        customerToEdit = customerTable.getSelectionModel().getSelectedItem();
         Parent parent = null;
         try {
             parent = FXMLLoader.load(getClass().getResource("/View/AppointmentSummary.fxml"));
@@ -93,6 +104,9 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * This method launches the View Reports screen.
+     */
     public void onViewReports(ActionEvent actionEvent) {
         Parent parent = null;
         try {
@@ -105,6 +119,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * This method displays a custom alert if there is an appointment happening
+     * within the next 15 minutes or not.
+     */
     public void checkForAppointments() {
         String result = DBAppointments.checkAppointmentIn15Minutes();
         if(result != null) {
@@ -119,6 +137,9 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * This method returns the customer selected in the table.
+     */
     public static Customers getCustomerToEdit() {
         return customerToEdit;
     }

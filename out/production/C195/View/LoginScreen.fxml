@@ -30,7 +30,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="ExitBtn" layoutX="472.0" layoutY="318.0" mnemonicParsing="false" onAction="#onExitBtn" text="%exit" />
+      <Button fx:id="ExitBtn" layoutX="472.0" layoutY="318.0" mnemonicParsing="false" text="%exit" />
       <Label fx:id="timeZoneLabel" layoutX="75.0" layoutY="321.0" text="Label">
          <font>
             <Font size="14.0" />

@@ -10,6 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBDivisions {
+
+    /**
+     * This method queries the database and returns a list of all divisions.
+     * @param countryId
+     * @return stateList
+     */
     public static ObservableList<Divisions> getStates(int countryId) {
 
         ObservableList<Divisions> stateList = FXCollections.observableArrayList();

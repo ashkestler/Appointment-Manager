@@ -36,11 +36,20 @@ public class Report102Controller implements Initializable {
     @FXML
     private TableColumn custIdCol;
 
+    /**
+     * This method gets the contact from the combobox and populates the table with the appointments
+     * for the chosen contact.
+     * @param actionEvent
+     */
     public void chooseContact(ActionEvent actionEvent) {
         Contacts contact = contactCombo.getValue();
         contactTable.setItems(DBAppointments.getAllApptsByContact(contact.getContactId()));
     }
 
+    /**
+     * This method returns to the Reports screen when Back button is pressed.
+     * @param actionEvent
+     */
     public void onBackBtn(ActionEvent actionEvent) {
         ReportsController backBtn = new ReportsController();
         backBtn.returnToReports(actionEvent);
