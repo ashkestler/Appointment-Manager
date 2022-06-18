@@ -1,6 +1,0 @@
-time: 2021-11-27T08:29:40.293-06:00	username: test	success: true	
-time: 2021-11-27T14:41:27.724-06:00	username: test	success: true	
-time: 2021-11-27T14:43:27.067-06:00	username: test	success: true	
-time: 2021-11-27T14:56:23.914-06:00	username: test	success: true	
-time: 2021-11-29T13:41:35.888-06:00	username: 	success: false	
-time: 2021-12-01T09:47:23.729-06:00	username: test	success: true	
